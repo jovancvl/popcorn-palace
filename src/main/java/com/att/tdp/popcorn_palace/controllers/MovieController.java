@@ -42,6 +42,7 @@ public class MovieController {
         return movieService.delete(id) ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    // after the app starts, this function gets executed
     @PostConstruct
     protected void initSomeMovies() {
         movieService.create(new Movie("Titanic", 1997, 8.9));

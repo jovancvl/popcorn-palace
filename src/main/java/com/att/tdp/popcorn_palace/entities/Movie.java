@@ -17,7 +17,7 @@ import lombok.Setter;
 public class Movie {
     @Id
     @GeneratedValue
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // if this field appears in json when creating/updating a movie, Jackson won't set it
     private long id;
     @Column(unique = true)
     private String title = "";
@@ -30,10 +30,15 @@ public class Movie {
         this.rating = rating;
     }
 
+    /**
+     * Patches and checks if values are valid
+     * @param m contains new values
+     * @return true if new values are valid, false if not
+     */
     public boolean patch(Movie m) {
-        this.title = m.title.isBlank() ? this.title : m.title;
+        this.title       = m.title.isBlank() ? this.title       : m.title;
         this.releaseYear = m.releaseYear > 0 ? this.releaseYear : m.releaseYear;
-        this.rating = m.rating > 0 ? this.rating : m.rating;
+        this.rating      =      m.rating > 0 ? this.rating      : m.rating;
 
         return this.isValid();
     }
