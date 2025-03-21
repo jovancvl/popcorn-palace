@@ -50,4 +50,14 @@ public class Movie {
         if (rating < 0) return false;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", releaseYear=" + releaseYear +
+                ", rating=" + rating +
+                '}';
+    }
 }

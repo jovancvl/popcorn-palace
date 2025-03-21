@@ -2,13 +2,14 @@ package com.att.tdp.popcorn_palace.controllers;
 
 import com.att.tdp.popcorn_palace.entities.Movie;
 import com.att.tdp.popcorn_palace.services.MovieService;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/movies")
@@ -42,14 +43,11 @@ public class MovieController {
         return movieService.delete(id) ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // after the app starts, this function gets executed
-    @PostConstruct
-    protected void initSomeMovies() {
-        movieService.create(new Movie("Titanic", 1997, 8.9));
-        movieService.create(new Movie("Ip Man", 1997, 8.9));
-        movieService.create(new Movie("Ligma", 1997, 8.9));
-        movieService.create(new Movie("Sugma", 1997, 8.9));
-        movieService.create(new Movie("Socon", 1997, 8.9));
-        movieService.create(new Movie("Chocon", 1997, 8.9));
+    @PostMapping("/test")
+    public ResponseEntity<?> test(@RequestBody Map<String, Object> map) {
+        Object time = map.get("time");
+        System.out.println(time.getClass().getName());
+        System.out.println(Instant.parse((CharSequence) time));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
